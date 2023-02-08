@@ -29,6 +29,74 @@ class Tree
 
     end
 
+    def insert(value)
+        inserted_node = Node.new(value)
+        if @root.nil?
+            @root = inserted_node
+            return
+        end
+
+        prev_node = nil
+        curr_node = @root
+        while curr_node
+            if(curr_node.data > value)
+                prev_node = curr_node
+                curr_node = curr_node.left
+            elsif (curr_node.data < value)
+                prev_node = curr_node
+                curr_node = curr_node.right
+            end
+        end
+        if prev_node.data > value
+            prev_node.left = inserted_node
+        else
+            prev_node.right = inserted_node
+        end
+    end
+
+    def delete(value, curr_root = @root)
+        return curr_root if curr_root.nil?
+
+        if curr_root.data > value
+            curr_root.left = delete(value, curr_root.left)
+        elsif curr_root.data < value
+            curr_root.right = delete(value, curr_root.right)
+        else
+            return root.right if root.left.nil?
+            return root.left if root.right.nil?
+
+            successor_p = curr_root
+            successor = curr_root.right
+
+            while successor.left
+                successor_p = successor
+                successor = successor.left
+            end
+
+            if successor_p != curr_root
+                successor_p.left = successor.right
+            else
+                successor_p.right = successor.left
+            end
+
+            curr_root.data = successor.data
+
+            curr_root
+        end
+    end
+
+    def find(value)
+        curr_node = @root
+        while curr_node.data != value
+            if curr_node.data > value
+                curr_node = curr_node.left
+            elsif curr_node.data < value
+                curr_node = curr_node.right
+            end
+        end
+        curr_node
+    end
+
     def pretty_print(node = root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -39,5 +107,9 @@ end
 
 array = Array.new(15) { rand(1..100) }
 bst = Tree.new(array)
+
+bst.pretty_print
+
+bst.insert(20)
 
 bst.pretty_print
