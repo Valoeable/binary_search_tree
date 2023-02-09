@@ -97,6 +97,43 @@ class Tree
         curr_node
     end
 
+    def level_order(queue = [])
+        return if @root.nil?
+
+        queue.push(@root)
+        while queue.length.nonzero?
+            current = queue.first
+            print(" #{current.data} ")
+            queue.push(current.left) unless current.left.nil?
+            queue.push(current.right) unless current.right.nil?
+            queue.shift
+        end
+    end
+    
+    def inorder(node = @root)
+        return if node.nil?
+    
+        print inorder(node.left)
+        print(" #{node.data} ")
+        print inorder(node.right)
+    end
+
+    def preorder(node = @root)
+        return if node.nil?
+    
+        print(" #{node.data} ")
+        print preorder(node.left)
+        print preorder(node.right)
+    end
+    
+    def postorder(node = @root)
+        return if node.nil?
+    
+        print postorder(node.left)
+        print postorder(node.right)
+        print(" #{node.data} ")
+    end
+
     def pretty_print(node = root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -113,3 +150,10 @@ bst.pretty_print
 bst.insert(20)
 
 bst.pretty_print
+bst.level_order
+print("\n")
+bst.inorder
+print("\n")
+bst.preorder
+print("\n")
+bst.postorder
