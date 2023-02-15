@@ -140,9 +140,22 @@ class Tree
         pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
     end
 
+    def height(tar_node, curr_node = root)
+        return -1 if curr_node.nil?
+
+        if curr_node.data == root.data
+          curr_node = find(tar_node.data)
+        end
+
+        left_h = height(tar_node, curr_node.left)
+        right_h = height(tar_node, curr_node.right)
+        [left_h, right_h].max + 1
+
+    end
+
 end
 
-array = Array.new(15) { rand(1..100) }
+array = Array.[](10, 15, 30, 40, 50, 60, 70, 80)
 bst = Tree.new(array)
 
 bst.pretty_print
@@ -157,3 +170,4 @@ print("\n")
 bst.preorder
 print("\n")
 bst.postorder
+
