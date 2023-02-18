@@ -153,6 +153,21 @@ class Tree
 
     end
 
+    def depth(tar_node, curr_node = root, dist = 0)
+        return -1 if curr_node.nil?
+
+        if curr_node.data > tar_node.data
+            dist += 1
+            depth(tar_node, curr_node.left, dist)
+        elsif curr_node.data < tar_node.data
+            dist += 1
+            depth(tar_node, curr_node.right, dist)
+        else
+          dist
+        end
+
+    end
+
 end
 
 array = Array.[](10, 15, 30, 40, 50, 60, 70, 80)
@@ -170,4 +185,3 @@ print("\n")
 bst.preorder
 print("\n")
 bst.postorder
-
