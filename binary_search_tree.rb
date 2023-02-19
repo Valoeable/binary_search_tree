@@ -9,7 +9,7 @@ class Node
 end
 
 class Tree
-    attr_accessor :root
+    attr_accessor :root, :data
 
     def initialize(array)
         sorted_array = array.sort.uniq
@@ -168,6 +168,32 @@ class Tree
 
     end
 
+    def balanced?(curr_node = @root)
+        left_h = height(curr_node.left)
+        return false if left_h == -1
+
+        right_h = height(curr_node.right)
+        return false if right_h == -1
+
+        return false if (left_h - right_h).abs > 1
+
+        true
+
+    end
+
+    def rebalance
+        self.data = inorder_writedown
+        self.root = build_tree(data)
+    end
+
+    def inorder_writedown(curr_node = root, array = [])
+      if curr_node
+        inorder_writedown(curr_node.left, array)
+        array.push(curr_node.data)
+        inorder_writedown(curr_node.right, array)
+      end
+      array
+    end
 end
 
 array = Array.[](10, 15, 30, 40, 50, 60, 70, 80)
