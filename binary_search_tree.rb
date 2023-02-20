@@ -196,14 +196,12 @@ class Tree
     end
 end
 
-array = Array.[](10, 15, 30, 40, 50, 60, 70, 80)
+array = Array.new(15) { rand(1..100) }
 bst = Tree.new(array)
 
-bst.pretty_print
+print bst.balanced?
+print("\n")
 
-bst.insert(20)
-
-bst.pretty_print
 bst.level_order
 print("\n")
 bst.inorder
@@ -211,3 +209,28 @@ print("\n")
 bst.preorder
 print("\n")
 bst.postorder
+print("\n")
+
+bst.insert(96)
+bst.insert(74)
+bst.insert(42)
+bst.insert(19)
+bst.insert(33)
+
+print bst.balanced?
+print("\n")
+
+bst.rebalance
+
+print bst.balanced?
+print("\n")
+
+bst.level_order
+print("\n")
+bst.inorder
+print("\n")
+bst.preorder
+print("\n")
+bst.postorder
+print("\n")
+
